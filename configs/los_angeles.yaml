@@ -1,0 +1,51 @@
+data:
+  city: LosAngeles
+  osm_dir: data/osm
+  questions_dir: data/instruction_dataset
+  benchmark_dir: data/benchmark
+  tasks: [length, area, distance, nearest]
+  samples_per_task: 2000
+  # Two decimals matches data/benchmark. The notebooks rounded length and area
+  # to integers, which does not match those labels.
+  length_decimals: 2
+  area_decimals: 2
+  distance_decimals: 0
+  include_thinking: false
+
+model:
+  base_model: Qwen/Qwen3-8B
+  geo_token: "<GEO>"
+  geo_hidden_dim: 256
+  geo_out_dim: 256
+  geo_projector_hidden_dim: 2048
+  torch_dtype: bfloat16
+  gradient_checkpointing: true
+
+lora:
+  enabled: true
+  r: 32
+  alpha: 64
+  dropout: 0.05
+  freeze_base_model: true
+
+runtime:
+  cuda_visible_devices: null
+
+train:
+  output_dir: outputs/slm_los_angeles
+  epochs: 3
+  # Fit the randomly initialized geo encoder to the frozen LM before LoRA updates.
+  encoder_only_epochs: 1
+  batch_size: 4
+  gradient_accumulation_steps: 8
+  learning_rate: 1.0e-5
+  geo_learning_rate_multiplier: 10.0
+  mixed_precision: bf16
+  eval_every_epochs: 1
+  eval_num_samples: 32
+  seed: 42
+
+generation:
+  batch_size: 8
+  max_new_tokens: 64
+  do_sample: false

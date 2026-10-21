@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "slm"
+version = "0.1.0"
+description = "Spatial language model for geospatial reasoning over Geo2Vec entities"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "accelerate>=0.34",
+    "geopandas>=0.14",
+    "numpy>=1.24",
+    "pillow>=10",
+    "peft>=0.12",
+    "pyyaml>=6",
+    "shapely>=2.0",
+    "torch>=2.1",
+    "tqdm>=4.66",
+    "transformers>=4.44",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+include = ["slm*", "utils*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

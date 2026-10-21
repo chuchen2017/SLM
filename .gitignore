@@ -1,4 +1,12 @@
-/model
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.venv/
+outputs/
 
-/data/osm/US/all_osm_with_names.gpkgdata/osm/US/all_osm_with_names.gpkg
+# The full US county layer is about 140MB. Training and test splits are tracked.
 data/osm/US/all_osm_with_names.gpkg
